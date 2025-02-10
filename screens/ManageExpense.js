@@ -1,4 +1,4 @@
-import {View, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import {useContext, useLayoutEffect} from 'react'
 import { ExpensesContext } from '../store/expenses-context'
 import { Button } from '../components/UI/Button'
