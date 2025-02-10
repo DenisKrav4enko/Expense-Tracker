@@ -3,11 +3,12 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Ionicons } from '@expo/vector-icons'
+import ExpensesContextProvider from './store/expenses-context'
 import ManageExpense from './screens/ManageExpense'
 import RecentExpenses from './screens/RecentExpenses'
 import AllExpenses from './screens/AllExpenses'
+import IconBtn from './components/UI/IconBtn'
 import { GlobalStyles } from './constants/styles'
-import IconBtn from "./components/UI/IconBtn";
 
 const Stack = createNativeStackNavigator()
 const BottomTabs = createBottomTabNavigator()
@@ -15,6 +16,7 @@ const BottomTabs = createBottomTabNavigator()
 function ExpensesOverview() {
     return (
         <BottomTabs.Navigator
+            id='bn01'
             screenOptions={({ navigation }) => ({
                 headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
                 headerTintColor: "white",
@@ -56,27 +58,30 @@ function ExpensesOverview() {
 export default function App() {
     return (
         <>
-            <StatusBar style="auto" />
-            <NavigationContainer>
-                <Stack.Navigator
-                    screenOptions={{
-                        headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-                        headerTintColor: 'white',
-                    }}
-                >
-                    <Stack.Screen
-                        name="ExpensesOverview"
-                        component={ExpensesOverview}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                        name="ManageExpenses"
-                        component={ManageExpense}
-                        options={{ presentation: 'modal', title: 'Manage Expenses',  }}
+            <StatusBar style="light" />
+            <ExpensesContextProvider>
+                <NavigationContainer>
+                    <Stack.Navigator
+                        id='st01'
+                        screenOptions={{
+                            headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+                            headerTintColor: 'white',
+                        }}
+                    >
+                        <Stack.Screen
+                            name="ExpensesOverview"
+                            component={ExpensesOverview}
+                            options={{ headerShown: false }}
+                        />
+                        <Stack.Screen
+                            name="ManageExpenses"
+                            component={ManageExpense}
+                            options={{ presentation: 'modal', title: 'Manage Expenses',  }}
 
-                    />
-                </Stack.Navigator>
-            </NavigationContainer>
+                        />
+                    </Stack.Navigator>
+                </NavigationContainer>
+            </ExpensesContextProvider>
         </>
     )
 }
