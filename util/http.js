@@ -2,11 +2,10 @@ import axios from 'axios'
 
 const URL = 'https://react-native-course-268a4-default-rtdb.europe-west1.firebasedatabase.app'
 
-export const storeExpense = expenseData => {
-    axios.post(
-        URL + '/expenses.json',
-        expenseData
-    )
+export const storeExpense = async expenseData => {
+    const response = await axios.post(URL + '/expenses.json', expenseData)
+    return response.data.name
+
 }
 
 export const fetchExpenses = async () => {
@@ -25,4 +24,12 @@ export const fetchExpenses = async () => {
     }
 
     return expenses
+}
+
+export function updateExpense(id, expenseData) {
+    return axios.put(URL + `/expenses/${id}.json`, expenseData)
+}
+
+export function deleteExpense(id) {
+    return axios.delete(URL + `/expenses/${id}.json`)
 }
